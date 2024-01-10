@@ -1,0 +1,34 @@
+<!-- views/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+</head>
+<body>
+
+<header>
+    <% if (user) { %>
+        <p>Bienvenido, <%= user.username %> (<%= user.role %>)</p>
+        <a href="/auth/logout">Cerrar Sesión</a>
+    <% } else { %>
+        <p>Bienvenido, Invitado</p>
+        <a href="/auth/login">Iniciar Sesión</a>
+        <a href="/auth/register">Registrarse</a>
+    <% } %>
+</header>
+
+<h1>Página Principal</h1>
+
+<main>
+    <!-- Contenido de la página principal -->
+</main>
+
+<footer>
+    <!-- Pie de página -->
+</footer>
+
+</body>
+</html>
