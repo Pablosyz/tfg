@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Ruta principal
 router.get('/', (req, res) => {
-    res.send('¡Bienvenido a la página principal!');
+    res.render('index');
 });
 
 module.exports = router;

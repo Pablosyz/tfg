@@ -1,15 +1,25 @@
 // app.js
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const configurePassport = require('./utils/passport-config');
+const passport = require('./utils/passport-config');  // Importa tu configuración de Passport.js
 const indexRoutes = require('./routes/indexRoutes');
 const authRoutes = require('./routes/authRoutes');
+const flash = require('connect-flash');
+const session = require('express-session');
 const User = require('./models/userModel');
 
 const app = express();
 
-mongoose.connect('mongodb://127.0.0.1:27017/miaplicaciondb', { useNewUrlParser: true, useUnifiedTopology: true })
+// Configuración de body-parser
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+// Configuración de connect-flash
+app.use(flash());
+
+mongoose.connect('mongodb://127.0.0.1:27017/miaplicaciondb', { })
     .then(() => {
         console.log('Conexión a la base de datos establecida');
     })
@@ -17,18 +27,32 @@ mongoose.connect('mongodb://127.0.0.1:27017/miaplicaciondb', { useNewUrlParser: 
         console.error('Error de conexión a la base de datos:', error.message);
     });
 
-app.use(require('express-session')({ secret: 'tu-secreto', resave: true, saveUninitialized: true }));
+// Configuración de express-session antes de Passport
+app.use(session({
+    secret: 'tu-secreto',
+    resave: false,
+    saveUninitialized: false,
+}));
 
-app.use(configurePassport.initialize());
-app.use(configurePassport.session());
+// Configuración de Passport
+console.log('Antes de la configuración de Passport');
+app.use(passport.initialize());
+app.use(passport.session());
+
+console.log('Después de la configuración de Passport');
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
+// Rutas principales
 app.use('/', indexRoutes);
+
+// Rutas de autenticación
 app.use('/auth', authRoutes);
 
 app.get('/profile', (req, res) => {
+    console.log('Accediendo a /profile');
+    console.log('Usuario autenticado:', req.isAuthenticated());
     if (req.isAuthenticated()) {
         res.render('profile', { user: req.user });
     } else {

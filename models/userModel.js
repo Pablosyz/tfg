@@ -1,6 +1,7 @@
 // userModel.js
 
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 // Define el esquema de User
 const userSchema = new mongoose.Schema({
@@ -19,6 +20,10 @@ const userSchema = new mongoose.Schema({
         default: 'normal'
     }
 });
+
+userSchema.methods.validPassword = function (password) {
+    return bcrypt.compareSync(password, this.password);
+};
 
 // Crea y exporta el modelo User
 const User = mongoose.model('User', userSchema);
