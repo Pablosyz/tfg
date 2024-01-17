@@ -1,0 +1,25 @@
+const alojamientosData = [
+  {
+    nombre: 'Alojamiento 1',
+    ubicacion: 'Ubicacion 1',
+    fotos: ['foto1.jpg', 'foto2.jpg', 'foto3.jpg'],
+    disponibilidad: [
+      { date: new Date('2024-01-01'), available: true },
+      { date: new Date('2024-01-02'), available: false },
+      // Puedes agregar más fechas de disponibilidad según sea necesario
+    ],
+    descripcion: 'Descripción detallada del alojamiento 1.',
+  },
+  {
+    nombre: 'Alojamiento 2',
+    ubicacion: 'Ubicacion 2',
+    fotos: ['foto4.jpg', 'foto5.jpg', 'foto6.jpg'],
+    disponibilidad: [
+      { date: new Date('2024-01-03'), available: true },
+      { date: new Date('2024-01-04'), available: true },
+      // Puedes agregar más fechas de disponibilidad según sea necesario
+    ],
+    descripcion: 'Descripción detallada del alojamiento 2.',
+  },
+  // Puedes seguir agregando más alojamientos según sea necesario
+];

@@ -4,8 +4,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('./utils/passport-config');  // Importa tu configuración de Passport.js
+
 const indexRoutes = require('./routes/indexRoutes');
 const authRoutes = require('./routes/authRoutes');
+const accommodationRoutes = require('./routes/accommodationRoutes');
+const reservationRoutes = require('./routes/reservationRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+
 const flash = require('connect-flash');
 const session = require('express-session');
 const User = require('./models/userModel');
@@ -46,9 +51,12 @@ app.set('views', __dirname + '/views');
 
 // Rutas principales
 app.use('/', indexRoutes);
-
 // Rutas de autenticación
 app.use('/auth', authRoutes);
+app.use('/admin', adminRoutes);
+//Rutas de alojamientos y reservas
+app.use('/', accommodationRoutes);
+app.use('/', reservationRoutes);
 
 app.get('/profile', (req, res) => {
     console.log('Accediendo a /profile');
