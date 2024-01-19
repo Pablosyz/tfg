@@ -1,0 +1,95 @@
+<!-- views/admin/reservations.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Panel de Administración - Reservas</title>
+</head>
+<body>
+<nav class="blue darken-1" role="navigation">
+    <div class="nav-wrapper container">
+        <a id="logo-container" href=".." class="brand-logo">Logo</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a id="admin-panel-link" href="../admin/">Panel de Administración</a></li>
+            <li><a id="users-link" href="./users">Usuarios</a></li>
+            <li><a id="accommodations-link" href="./accommodations">Alojamientos</a></li>
+            <li><a id="reservations-link" href="./reservations">Reservas</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
+        </ul>
+        <ul id="nav-mobile" class="sidenav">
+            <li><a id="admin-panel-link-mobile" href="./admin/">Panel de Administración</a></li>
+            <li><a id="users-link-mobile" href="./users">Usuarios</a></li>
+            <li><a id="accommodations-link-mobile" href="./accommodations">Alojamientos</a></li>
+            <li><a id="reservations-link-mobile" href="./reservations">Reservas</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
+        </ul>
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+</nav>
+<header>
+</header>
+
+<main>
+    <!-- Contenido del Panel de Administración -->
+    <div class="container">
+        <!-- Sección de Reservas -->
+        <section id="reservations-section" class="admin-section">
+            <h2>Reservas</h2>
+            <!-- Formulario para crear reservas -->
+            <!--<form action="/admin/reservations" method="post">
+                &lt;!&ndash; Campos del formulario para reservas según tus necesidades &ndash;&gt;
+                <input type="text" name="usuario" placeholder="Usuario" required>
+                <input type="text" name="alojamiento" placeholder="Alojamiento" required>
+                <input type="date" name="fechaInicio" placeholder="Fecha de Inicio" required>
+                <input type="date" name="fechaFin" required>
+
+                <button type="submit">Crear Reserva</button>
+            </form>-->
+
+            <!-- Tabla para mostrar reservas existentes -->
+            <table class="highlight responsive-table">
+                <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Alojamiento</th>
+                    <th>Fecha de inicio</th>
+                    <th>Fecha de fin</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% if (typeof reservations !== 'undefined' && reservations.length > 0) { %>
+                    <% reservations.forEach(reservation => { %>
+                        <tr>
+                            <td><%= reservation.usuario.username %></td>
+                            <td><%= reservation.alojamiento.nombre %></td>
+                            <td><%= reservation.fecha_inicio %></td>
+                            <td><%= reservation.fecha_fin %></td>
+                            <td><%= reservation.precioTotal %></td>
+                                <!-- Agregar botones para editar y eliminar (puedes usar formularios o enlaces según prefieras) -->
+                                <a class="waves-effect waves-light btn" href="/admin/reservations/<%= reservation._id %>/edit">Editar</a>
+                                <a class="waves-effect waves-light btn" href="/admin/reservations/<%= reservation._id %>/delete">Eliminar</a>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="5">No reservations found.</td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </section>
+    </div>
+</main>
+
+<!-- Resto del código similar a la vista principal -->
+
+</body>
+</html>

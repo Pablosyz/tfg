@@ -1,0 +1,93 @@
+<!-- views/admin/users.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <title>Panel de Administración de Usuarios</title>
+</head>
+<body>
+<nav class="blue darken-1" role="navigation">
+    <div class="nav-wrapper container">
+        <a id="logo-container" href=".." class="brand-logo">Logo</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a id="admin-panel-link" href="../admin/">Panel de Administración</a></li>
+            <li><a id="users-link" href="./users">Usuarios</a></li>
+            <li><a id="accommodations-link" href="./accommodations">Alojamientos</a></li>
+            <li><a id="reservations-link" href="./reservations">Reservas</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
+        </ul>
+        <ul id="nav-mobile" class="sidenav">
+            <li><a id="admin-panel-link-mobile" href="./admin/">Panel de Administración</a></li>
+            <li><a id="users-link-mobile" href="./users">Usuarios</a></li>
+            <li><a id="accommodations-link-mobile" href="./accommodations">Alojamientos</a></li>
+            <li><a id="reservations-link-mobile" href="./reservations">Reservas</a></li>
+            <li><a href="/auth/logout">Logout</a></li>
+        </ul>
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+</nav>
+<main>
+    <!-- Contenido del Panel de Administración -->
+    <div class="container">
+        <!-- Sección de Usuarios -->
+        <section id="users-section" class="admin-section">
+            <h2>Usuarios</h2>
+            <!-- Agregar formularios y lógica para usuarios aquí -->
+            <form action="/admin/users" method="post">
+                <!-- Campos del formulario según tus necesidades -->
+                <input type="text" name="username" placeholder="Nombre de usuario" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <input type="text" name="nombre" placeholder="Nombre completo" required>
+                <input type="tel" name="telefono" placeholder="Número de teléfono">
+
+                <!-- Otros campos de datos personales según sea necesario -->
+                <button class="btn waves-effect waves-light blue darken-1" type="submit">Crear Usuario</button>
+            </form>
+            <!-- Tabla para mostrar usuarios existentes -->
+            <table class="highlight responsive-table">
+                <thead>
+                <tr>
+                    <th>Nombre de usuario</th>
+                    <th>Rol</th>
+                    <th>Nombre completo</th>
+                    <th>Número de teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% if (typeof users !== 'undefined' && users.length > 0) { %>
+                    <% users.forEach(user => { %>
+                        <tr>
+                            <td><%= user.username %></td>
+                            <td><%= user.role %></td>
+                            <td><%= user.nombre %></td>
+                            <td><%= user.telefono %></td>
+                            <td>
+                                <!-- Agregar botones para editar y eliminar (puedes usar formularios o enlaces según prefieras) -->
+                                <a class="waves-effect waves-light btn" href="/admin/users/<%= user._id %>/edit">Editar</a>
+                                <a class="waves-effect waves-light btn" href="/admin/users/<%= user._id %>/delete">Eliminar</a>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="5">No users found.</td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+
+        </section>
+
+    </div>
+</main>
+
+<!-- Resto del código similar a la vista principal -->
+
+</body>
+</html>

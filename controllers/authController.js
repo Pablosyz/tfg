@@ -9,10 +9,10 @@ exports.showRegisterForm = (req, res) => {
 
 exports.registerUser = async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { username, password, nombre, telefono } = req.body;
         // Hashea la contraseña antes de almacenarla en la base de datos
         const hashedPassword = bcrypt.hashSync(password, 10);
-        const newUser = new User({ username, password: hashedPassword });
+        const newUser = new User({ username, password: hashedPassword, nombre, telefono });
         await newUser.save();
         // Configura un mensaje flash de éxito
         req.flash('success', 'Usuario registrado con éxito');

@@ -6,6 +6,7 @@ const reservationSchema = new mongoose.Schema({
     alojamiento: { type: mongoose.Schema.Types.ObjectId, ref: 'Accommodation', required: true },
     fecha_inicio: { type: Date, required: true },
     fecha_fin: { type: Date, required: true },
+    precioTotal: { type: Number, required: true}
     // Otros campos relacionados con la reserva
 });
 

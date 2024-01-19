@@ -1,45 +1,56 @@
 // reservationController.js
 const Reservation = require('../models/reservationModel');
 
-// Controlador para crear una nueva reserva
-async function createReservation(req, res) {
+exports.getReservations = async (req, res) => {
     try {
-        const nuevaReserva = new Reservation(req.body);
-        await nuevaReserva.save();
-        res.status(201).json(nuevaReserva);
+        const reservations = await Reservation.find();
+        res.render('admin/reservations', { reservations });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
-
-// Controlador para obtener una reserva por ID
-async function getReservation(req, res) {
-    try {
-        const { id } = req.params;
-        const reserva = await Reservation.findById(id);
-
-        if (!reserva) {
-            return res.status(404).json({ message: 'Reserva no encontrada' });
-        }
-
-        res.json(reserva);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-}
-
-// Controlador para obtener todas las reservas
-async function getAllReservations(req, res) {
-    try {
-        const reservas = await Reservation.find();
-        res.json(reservas);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-}
-
-module.exports = {
-    createReservation,
-    getReservation,
-    getAllReservations
 };
+
+exports.createReservation = async (req, res) => {
+    try {
+        const { usuario, alojamiento, fecha_inicio, fecha_fin, precioTotal } = req.body;
+        const newReservation = new Reservation({ usuario, alojamiento, fecha_inicio, fecha_fin, precioTotal });
+        await newReservation.save();
+        req.flash('success', 'Reserva creada con éxito');
+        res.redirect('/admin/reservations');
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'Error al crear reserva');
+        res.redirect('/admin/reservations');
+    }
+};
+
+exports.editReservation = async (req, res) => {
+    try {
+        const reservation = await Reservation.findById(req.params.id);
+        res.render('admin/editReservation', { reservation });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.updateReservation = async (req, res) => {
+    try {
+        const reservationId = req.params.id;
+        const { usuario, alojamiento, fecha_inicio, fecha_fin, precioTotal } = req.body;
+        await Reservation.findByIdAndUpdate(reservationId, { usuario, alojamiento, fecha_inicio, fecha_fin, precioTotal });
+        res.redirect('/admin/reservations');
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.deleteReservation = async (req, res) => {
+    try {
+        await Reservation.findByIdAndDelete(req.params.id);
+        res.redirect('/admin/reservations');
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+// Otros controladores reservas
+

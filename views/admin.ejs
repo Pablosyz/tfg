@@ -8,28 +8,6 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Oculta todas las secciones al principio
-            $(".admin-section").hide();
-
-            // Muestra la sección correspondiente al hacer clic en un enlace
-            $("#users-link").click(function() {
-                $(".admin-section").hide();
-                $("#users-section").show();
-            });
-
-            $("#accommodations-link").click(function() {
-                $(".admin-section").hide();
-                $("#accommodations-section").show();
-            });
-
-            $("#reservations-link").click(function() {
-                $(".admin-section").hide();
-                $("#reservations-section").show();
-            });
-        });
-    </script>
     <title>Panel de Administración</title>
 </head>
 <body>
@@ -37,110 +15,44 @@
     <div class="nav-wrapper container">
         <a id="logo-container" href=".." class="brand-logo">Logo</a>
         <ul class="right hide-on-med-and-down">
-            <li><a id="users-link" href="#">Usuarios</a></li>
-            <li><a id="accommodations-link" href="#">Alojamientos</a></li>
-            <li><a id="reservations-link" href="#">Reservas</a></li>
+            <li><a id="users-link" href="../admin/users">Usuarios</a></li>
+            <li><a id="accommodations-link" href="../admin/accommodations">Alojamientos</a></li>
+            <li><a id="reservations-link" href="../admin/reservations">Reservas</a></li>
             <li><a href="/auth/logout">Logout</a></li>
         </ul>
         <ul id="nav-mobile" class="sidenav">
-            <li><a id="users-link-mobile" href="#">Usuarios</a></li>
-            <li><a id="accommodations-link-mobile" href="#">Alojamientos</a></li>
-            <li><a id="reservations-link-mobile" href="#">Reservas</a></li>
+            <li><a id="users-link-mobile" href="./admin/users">Usuarios</a></li>
+            <li><a id="accommodations-link-mobile" href="./admin/accommodations">Alojamientos</a></li>
+            <li><a id="reservations-link-mobile" href="./admin/reservations">Reservas</a></li>
             <li><a href="/auth/logout">Logout</a></li>
         </ul>
         <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
 </nav>
 <header>
-    <h1 class="header center orange-text">Panel de Administración</h1>
 </header>
 
 <main>
-    <!-- Contenido del Panel de Administración -->
-    <div class="container">
-        <!-- Sección de Usuarios -->
-        <section id="users-section" class="admin-section">
-            <h2>Usuarios</h2>
-            <!-- Agregar formularios y lógica para usuarios aquí -->
-            <form action="/admin/users" method="post">
-                <!-- Campos del formulario según tus necesidades -->
-                <input type="text" name="username" placeholder="Nombre de usuario" required>
-                <input type="password" name="password" placeholder="Contraseña" required>
-                <input type="text" name="nombre" placeholder="Nombre completo" required>
-                <input type="tel" name="telefono" placeholder="Número de teléfono">
+    <div class="section no-pad-bot" id="index-banner">
+        <div class="container">
+            <br><br>
+            <h1 class="header center orange-text">Panel de Administración</h1>
+            <div class="row center">
+                <h5 class="header col s12 light">Este es la página de administración de la aplicación.</h5>
+                <p class="text-accent-1">Aquí encontrarás diferentes opciones para interactuar con la base de datos</p>
+            </div>
+            <div class="row center">
+                <a href="/admin/users" id="admin-users-button" class="btn-large waves-effect waves-light blue">Usuarios</a>
+                <a href="/admin/accommodations" id="admin-accomm-button" class="btn-large waves-effect waves-light orange lighten-2">Alojamientos</a>
+                <a href="/admin/reservations" id="admin-reserv-button" class="btn-large waves-effect waves-light green lighten-2">Reservas</a>
+            </div>
 
-                <!-- Otros campos de datos personales según sea necesario -->
+            <br><br>
 
-                <button type="submit">Crear Usuario</button>
-            </form>
-
-            <ul>
-                <!-- Lógica para mostrar usuarios existentes -->
-                <% users.forEach(user => { %>
-                    <li>
-                        <!-- Mostrar información del usuario -->
-                        <%= user.username %> - <%= user.role %> - <%= user.nombre %> - <%= user.telefono %>
-
-                        <!-- Agregar botones para editar y eliminar (puedes usar formularios o enlaces según prefieras) -->
-                        <a href="/admin/users/<%= user._id %>/edit">Editar</a>
-                        <a href="/admin/users/<%= user._id %>/delete">Eliminar</a>
-                    </li>
-                <% }); %>
-            </ul>
-        </section>
-
-        <!-- Sección de Alojamientos -->
-        <section id="accommodations-section" class="admin-section">
-            <h2>Alojamientos</h2>
-            <form action="/admin/accommodations" method="post">
-                <!-- Campos del formulario para alojamientos según tus necesidades -->
-                <input type="text" name="nombre" placeholder="Nombre del alojamiento" required>
-                <input type="text" name="ubicacion" placeholder="Ubicación" required>
-                <!-- Otros campos para imágenes, disponibilidad, etc. -->
-                <button type="submit">Crear Alojamiento</button>
-            </form>
-
-            <ul>
-                <!-- Lógica para mostrar alojamientos existentes -->
-                <% accommodations.forEach(accommodation => { %>
-                    <li>
-                        <%= accommodation.nombre %> - <%= accommodation.ubicacion %>
-                        <!-- Agregar enlaces para editar y eliminar según tus rutas y controladores -->
-                        <a href="/admin/accommodations/<%= accommodation._id %>/edit">Editar</a>
-                        <a href="/admin/accommodations/<%= accommodation._id %>/delete">Eliminar</a>
-                    </li>
-                <% }); %>
-            </ul>
-        </section>
-
-        <!-- Sección de Reservas -->
-        <section id="reservations-section" class="admin-section">
-            <h2>Reservas</h2>
-            <!-- Formulario para crear reservas -->
-            <form action="/admin/reservations" method="post">
-                <!-- Campos del formulario para reservas según tus necesidades -->
-                <input type="text" name="usuario" placeholder="Usuario" required>
-                <input type="text" name="alojamiento" placeholder="Alojamiento" required>
-                <input type="date" name="fecha" required>
-                <button type="submit">Crear Reserva</button>
-            </form>
-
-            <ul>
-                <!-- Lógica para mostrar reservas existentes -->
-                <% reservations.forEach(reservation => { %>
-                    <li>
-                        <%= reservation.usuario %> - <%= reservation.alojamiento %> - <%= reservation.fecha %>
-                        <!-- Agregar enlaces para editar y eliminar según tus rutas y controladores -->
-                        <a href="/admin/reservations/<%= reservation._id %>/edit">Editar</a>
-                        <a href="/admin/reservations/<%= reservation._id %>/delete">Eliminar</a>
-                    </li>
-                <% }); %>
-            </ul>
-        </section>
+        </div>
     </div>
 </main>
 
-<!-- Resto del código similar a la vista principal -->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>

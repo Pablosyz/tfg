@@ -2,6 +2,11 @@
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
+const middleware = require('../middleware/checkAdmin');
+
+// Aplica el middleware a todas las rutas de administración
+router.use(middleware.isAdmin);
+
 
 // Rutas para usuarios en el panel de administración
 router.get('/users', adminController.getUsers);

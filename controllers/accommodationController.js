@@ -1,35 +1,68 @@
 // accommodationController.js
 const Accommodation = require('../models/accommodationModel');
 
-// Middleware para verificar el rol de administrador
-function isAdmin(req, res, next) {
-    if (req.user && req.user.role === 'admin') {
-        // Si el usuario es administrador, continúa con la siguiente operación
-        next();
-    } else {
-        // Si el usuario no es administrador, permite la operación solo si es una consulta (GET)
-        if (req.method === 'GET') {
-            next();
-        } else {
-            // Si la solicitud no es una consulta (GET), responde con un error
-            res.status(403).json({ message: 'Acceso no autorizado. Se requieren privilegios de administrador para crear alojamientos.' });
-        }
-    }
-}
-
-// Controlador para crear un nuevo alojamiento
-async function createAccommodation(req, res) {
+exports.getAccommodations = async (req, res) => {
     try {
-        const nuevoAlojamiento = new Accommodation(req.body);
-        await nuevoAlojamiento.save();
-        res.status(201).json(nuevoAlojamiento);
+        const accommodations = await Accommodation.find();
+
+        // Verificar si el usuario está logueado y es admin
+        if (req.isAuthenticated() && req.user.isAdmin) {
+            // Renderizar la página de administración
+            res.render('admin/accommodations', { accommodations });
+        } else {
+            // Renderizar la página pública de alojamientos
+            res.render('/alojamientos', { accommodations });
+        }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
+};
+
+exports.createAccommodation = async (req, res) => {
+    try {
+        const { nombre, ubicacion, precioPorNoche, capacidad, tipo, descripcion } = req.body;
+        const newAccommodation = new Accommodation({ nombre, ubicacion, precioPorNoche, capacidad, tipo, descripcion });
+        await newAccommodation.save();
+        req.flash('success', 'Alojamiento creado con éxito');
+        res.redirect('/admin/accommodations');
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'Error al crear alojamiento');
+        res.redirect('/admin/accommodations');
+    }
+};
+
+exports.editAccommodation = async (req, res) => {
+    try {
+        const accommodation = await Accommodation.findById(req.params.id);
+        res.render('admin/editAccommodation', { accommodation });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.updateAccommodation = async (req, res) => {
+    try {
+        const accommodationId = req.params.id;
+        const { nombre, ubicacion, precioPorNoche, capacidad, tipo, descripcion } = req.body;
+        await Accommodation.findByIdAndUpdate(accommodationId, { nombre, ubicacion, precioPorNoche, capacidad, tipo, descripcion });
+        res.redirect('/admin/accommodations');
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+exports.deleteAccommodation = async (req, res) => {
+    try {
+        await Accommodation.findByIdAndDelete(req.params.id);
+        res.redirect('/admin/accommodations');
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
 // Controlador para obtener todas las imágenes de un alojamiento
-async function getAccommodationImages(req, res) {
+exports.getAccommodationImages = async (req, res) => {
     try {
         const { id } = req.params;
         const alojamiento = await Accommodation.findById(id);
@@ -46,7 +79,7 @@ async function getAccommodationImages(req, res) {
 }
 
 // Controlador para agregar una nueva imagen a un alojamiento
-async function addAccommodationImage(req, res) {
+exports.addAccommodationImage = async (req, res) => {
     try {
         const { id } = req.params;
         const alojamiento = await Accommodation.findById(id);
@@ -66,8 +99,8 @@ async function addAccommodationImage(req, res) {
 }
 
 // Controlador para obtener todas las fechas de disponibilidad de un alojamiento
-async function getAccommodationAvailability(req, res) {
-    try {
+exports.getAccommodationAvailability = async (req, res) => {
+   try {
         const { id } = req.params;
         const alojamiento = await Accommodation.findById(id);
 
@@ -83,7 +116,7 @@ async function getAccommodationAvailability(req, res) {
 }
 
 // Controlador para agregar una nueva fecha de disponibilidad a un alojamiento
-async function addAccommodationAvailability(req, res) {
+exports.addAccommodationAvailability = async (req, res) => {
     try {
         const { id } = req.params;
         const alojamiento = await Accommodation.findById(id);
@@ -103,13 +136,3 @@ async function addAccommodationAvailability(req, res) {
 }
 
 // Otros controladores para reservas, si es necesario...
-
-module.exports = {
-    isAdmin,
-    createAccommodation,
-    getAccommodationImages,
-    addAccommodationImage,
-    getAccommodationAvailability,
-    addAccommodationAvailability
-    // Otros controladores...
-};

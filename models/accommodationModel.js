@@ -18,6 +18,16 @@ const accommodationSchema = new mongoose.Schema({
     fotos: [imageSchema], // Array de imágenes
     disponibilidad: [availabilitySchema], // Array de disponibilidad
     descripcion: String,
+    precioPorNoche: Number, // Nuevo atributo: precio por noche
+    capacidad: Number, // Nuevo atributo: capacidad
+    tipo: String, // Nuevo atributo: tipo de alojamiento (hotel, casa rural, etc.)
+    comentarios: [
+        {
+            usuario: String, // Nombre del usuario que dejó el comentario
+            comentario: String, // Texto del comentario
+            fecha: Date, // Fecha del comentario
+        }
+    ],
 });
 
 const Accommodation = mongoose.model('Accommodation', accommodationSchema);
