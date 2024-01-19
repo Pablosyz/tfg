@@ -6,12 +6,12 @@ exports.getAccommodations = async (req, res) => {
         const accommodations = await Accommodation.find();
 
         // Verificar si el usuario está logueado y es admin
-        if (req.isAuthenticated() && req.user.isAdmin) {
+        if (req.isAuthenticated() && req.user.role === 'admin') {
             // Renderizar la página de administración
             res.render('admin/accommodations', { accommodations });
         } else {
             // Renderizar la página pública de alojamientos
-            res.render('/alojamientos', { accommodations });
+            res.render('alojamientos', { accommodations });
         }
     } catch (error) {
         res.status(500).json({ error: error.message });

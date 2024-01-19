@@ -1,0 +1,65 @@
+<!-- views/alojamientos.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Listado de Alojamientos</title>
+</head>
+
+<body>
+<nav class="blue darken-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo">Logo</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/profile">Perfil</a></li>
+            <li><a href="/auth/login">Login</a></li>
+        </ul>
+        <ul id="nav-mobile" class="sidenav">
+            <li><a href="/profile">Perfil</a></li>
+            <li><a href="/auth/login">Login</a></li>
+        </ul>
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Listado de Alojamientos</h1>
+    <% accommodations.forEach(accommodation => { %>
+        <div class="card">
+            <div class="card-image">
+                <!-- Verificar si accommodation y accommodation.fotos existen -->
+                <% if (accommodation && accommodation.fotos && accommodation.fotos.length > 0) { %>
+                    <!-- Mostrar la imagen si está definido -->
+                    <img src="<%= accommodation.fotos[0].url %>" alt="<%= accommodation.nombre %>">
+                <% } else { %>
+                    <!-- Manejar el caso en que no hay fotos -->
+                    <p>No hay fotos disponibles</p>
+                <% } %>
+            </div>
+            <div class="card-content">
+                <span class="card-title"><%= accommodation.nombre %></span>
+                <p><strong>Precio por noche:</strong> <%= accommodation.precioPorNoche %> EUR</p>
+                <p><strong>Ubicación:</strong> <%= accommodation.ubicacion %></p>
+                <p><strong>Capacidad:</strong> <%= accommodation.capacidad %> personas</p>
+                <p><strong>Tipo:</strong> <%= accommodation.tipo %></p>
+                <p><strong>Descripción:</strong> <%= accommodation.descripcion %></p>
+                <!-- Otros detalles del alojamiento... -->
+            </div>
+            <div class="card-action">
+                <!-- Enlaces o botones adicionales si es necesario -->
+                <a href="/reservar/<%= accommodation._id %>" class="waves-effect waves-light btn">Reservar</a>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+<%- include('./footer.ejs') %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>
