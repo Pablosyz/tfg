@@ -1,0 +1,95 @@
+<!-- views/admin/editReservation.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <title>Editar Reserva</title>
+</head>
+<body>
+<%- include('../navbar', { showProfile: false, showAdmin: true}) %>
+<main>
+    <div class="container">
+        <div class="row">
+            <h4 class="header center">Edición de Reserva</h4>
+        </div>
+        <!-- Formulario para editar reserva -->
+        <form class="col l6 s12" action="/admin/reservations/<%= reservation._id %>/edit" method="post">
+            <div class="row">
+                <div class="input-field col s6">
+                    <select name="alojamiento" required>
+                        <option value="<%= reservation.alojamiento %>" selected="<%= reservation.alojamiento %>"></option>
+                        <% accommodations.forEach(accommodation => { %>
+                            <option value="<%= accommodation._id %>"><%= accommodation.nombre %></option>
+                        <% }); %>
+                    </select>
+                    <label id="alojamiento">Alojamiento</label>
+                </div>
+            </div>
+                        <div class="row">
+                <label for="nombreReserva">Nombre para la reserva:</label>
+                <input type="text" id="nombreReserva" name="nombreReserva" value="<%= reservation.nombreReserva %>" />
+            </div>
+            <div class="row">
+                <label for="emailConfirmacion">Email de Confirmación:</label>
+                <input type="email" id="emailConfirmacion" name="emailConfirmacion" value="<%= reservation.emailConfirmacion %>"/>
+            </div>
+            <div class="row">
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" value="<%= reservation.telefono %>"/>
+            </div>
+            <div class="row">
+                <label for="fecha_inicio">Fecha inicio:</label>
+                <input type="text" id="fecha_inicio" class="datepicker" name="fecha_inicio" value="<%= reservation.fecha_inicio %>" />
+            </div>
+            <div class="row">
+                <label for="fecha_fin">Fecha fin:</label>
+                <input type="text" id="fecha_fin" class="datepicker" name="fecha_fin" value="<%= reservation.fecha_fin %>" />
+            </div>
+            <div class="row">
+                <label id="huespedes">Nº Huéspedes:</label>
+                <input type="number" name="huespedes" value="<%= reservation.huespedes %>" />
+            </div>
+            <div class="row">
+                <label id="precioTotal">Precio total:</label>
+                <input type="text" name="precioTotal" value="<%= reservation.precioTotal %>" />
+            </div>
+            <!-- Otros campos según tus necesidades -->
+            <div class="row">
+                <button class="btn waves-effect waves-light teal darken-1" type="submit" name="action">Actualizar Reserva
+                    <i class="material-icons right">send</i>
+                </button>
+                <a class="btn waves-effect waves-light teal darken-1" href="/admin/reservations">Volver atrás
+                    <i class="material-icons right">arrow_back</i>
+                </a>
+            </div>
+        </form>
+    </div>
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var options = {};
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems, options);
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        var options = {
+            format: 'yyyy-mm-dd',
+            autoClose: true,
+            defaultDate: new Date("<%= reservation.fecha_inicio %>"), // Use the server-side date format
+            setDefaultDate: true,
+        };
+        var elems = document.querySelectorAll('.datepicker');
+        var instances = M.Datepicker.init(elems, options);
+    });
+</script>
+
+
+</body>
+</html>

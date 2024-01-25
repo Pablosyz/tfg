@@ -5,7 +5,7 @@ const router = express.Router();
 
 // Ruta principal
 router.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', { currentView: 'index', showProfile: false, showAdmin: false });
 });
 
 module.exports = router;

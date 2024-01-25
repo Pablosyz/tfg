@@ -65,13 +65,13 @@ exports.deleteAccommodation = async (req, res) => {
 exports.getAccommodationImages = async (req, res) => {
     try {
         const { id } = req.params;
-        const alojamiento = await Accommodation.findById(id);
+        const accommodation = await Accommodation.findById(id);
 
-        if (!alojamiento) {
+        if (!accommodation) {
             return res.status(404).json({ message: 'Alojamiento no encontrado' });
         }
 
-        const imagenes = alojamiento.imagenes || [];
+        const imagenes = accommodation.imagenes || [];
         res.json(imagenes);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -82,17 +82,17 @@ exports.getAccommodationImages = async (req, res) => {
 exports.addAccommodationImage = async (req, res) => {
     try {
         const { id } = req.params;
-        const alojamiento = await Accommodation.findById(id);
+        const accommodation = await Accommodation.findById(id);
 
-        if (!alojamiento) {
+        if (!accommodation) {
             return res.status(404).json({ message: 'Alojamiento no encontrado' });
         }
 
         const nuevaImagen = req.body.nuevaImagen; // Asegúrate de enviar la imagen en el cuerpo de la solicitud
-        alojamiento.imagenes.push(nuevaImagen);
-        await alojamiento.save();
+        accommodation.imagenes.push(nuevaImagen);
+        await accommodation.save();
 
-        res.status(201).json(alojamiento);
+        res.status(201).json(accommodation);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -102,14 +102,14 @@ exports.addAccommodationImage = async (req, res) => {
 exports.getAccommodationAvailability = async (req, res) => {
    try {
         const { id } = req.params;
-        const alojamiento = await Accommodation.findById(id);
+        const accommodation = await Accommodation.findById(id);
 
-        if (!alojamiento) {
+        if (!accommodation) {
             return res.status(404).json({ message: 'Alojamiento no encontrado' });
         }
 
-        const disponibilidad = alojamiento.disponibilidad || [];
-        res.json(disponibilidad);
+        const availability = accommodation.disponibilidad || [];
+        res.json(availability);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -119,20 +119,35 @@ exports.getAccommodationAvailability = async (req, res) => {
 exports.addAccommodationAvailability = async (req, res) => {
     try {
         const { id } = req.params;
-        const alojamiento = await Accommodation.findById(id);
+        const accommodation = await Accommodation.findById(id);
 
-        if (!alojamiento) {
+        if (!accommodation) {
             return res.status(404).json({ message: 'Alojamiento no encontrado' });
         }
 
         const nuevaFechaDisponibilidad = req.body.nuevaFechaDisponibilidad; // Asegúrate de enviar la fecha en el cuerpo de la solicitud
-        alojamiento.disponibilidad.push(nuevaFechaDisponibilidad);
-        await alojamiento.save();
+        accommodation.disponibilidad.push(nuevaFechaDisponibilidad);
+        await accommodation.save();
 
-        res.status(201).json(alojamiento);
+        res.status(201).json(accommodation);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
 
+exports.getAccommodationDetail = async (req, res) => {
+    try {
+        const accommodation = await Accommodation.findById(req.params.id);
+
+        if (!accommodation) {
+            // Manejar el caso en que el alojamiento no se encuentre
+            return res.status(404).render('error.ejs', { message: 'Alojamiento no encontrado' });
+        }
+
+        // Renderizar la vista con los detalles del alojamiento
+        res.render('detalleAlojamiento.ejs', { accommodation });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 // Otros controladores para reservas, si es necesario...

@@ -17,6 +17,7 @@ router.get('/users/:id/delete', adminController.deleteUser);
 
 // Rutas para reservas en el panel de administración
 router.get('/reservations', adminController.getReservations);
+router.get('/reservations/new', adminController.getNewReservation);
 router.post('/reservations', adminController.createReservation);
 router.get('/reservations/:id/edit', adminController.editReservation);
 router.post('/reservations/:id/edit', adminController.updateReservation);

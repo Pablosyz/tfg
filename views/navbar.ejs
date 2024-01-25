@@ -1,0 +1,45 @@
+<div class="navbar-fixed">
+    <nav class="teal lighten-2" role="navigation">
+        <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo"><img class="responsive-img" src="/images/logo.png" alt="Logo" style="width: 170px;"></a>
+            <ul class="right hide-on-med-and-down">
+                <% if (showAdmin) { %>
+                    <li><a href="/admin/">Panel de Administración</a></li>
+                    <li><a href="/admin/users">Usuarios</a></li>
+                    <li><a href="/admin/accommodations">Alojamientos</a></li>
+                    <li><a href="/admin/reservations">Reservas</a></li>
+                    <li><a href="/auth/logout">Logout</a></li>
+                <% } %>
+                <% if (showProfile) { %>
+                    <li><a href="/profile">Perfil</a></li>
+                    <li><a href="/alojamientos">Alojamientos</a></li>
+                    <li><a href="/profile/reservations">Mis Reservas</a></li>
+                    <li><a href="/auth/logout">Logout</a></li>
+                <% } %>
+                <% if (!showProfile && !showAdmin) { %>
+                        <li><a href="/auth/register" >Regístrate</a></li>
+                        <li><a href="/auth/login">Login</a></li>
+                <% } %>
+            </ul>
+            <ul id="nav-mobile" class="sidenav">
+                <% if (showAdmin) { %>
+                    <li><a href="/admin/">Panel de Administración</a></li>
+                    <li><a href="/admin/users">Usuarios</a></li>
+                    <li><a href="/admin/accommodations">Alojamientos</a></li>
+                    <li><a href="/admin/reservations">Reservas</a></li>
+                    <li><a href="/auth/logout">Logout</a></li>
+                <% } %>
+                <% if (showProfile) { %>
+                    <li><a href="/profile">Perfil</a></li>
+                    <li><a href="/alojamientos">Alojamientos</a></li>
+                    <li><a href="/profile/reservations">Mis Reservas</a></li>
+                    <li><a href="/auth/logout">Logout</a></li>
+                <% } %>
+                <% if (!showProfile && !showAdmin) { %>
+                    <li><a href="/auth/login">Login</a></li>
+                    <li><a href="/auth/logout">Logout</a></li>
+                <% } %>
+            </ul>
+            <a href="/" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+</div>

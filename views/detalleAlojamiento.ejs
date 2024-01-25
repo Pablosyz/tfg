@@ -1,0 +1,73 @@
+<!-- views/detalleAlojamiento.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Detalle del Alojamiento</title>
+</head>
+
+<body>
+
+<% if (user) { %>
+    <%- include('navbar', { showProfile: true, showAdmin: false}) %>
+<% } else { %>
+    <%- include('navbar', { showProfile: false, showAdmin: false}) %>
+<% } %>
+
+<div class="container">
+    <% if (accommodation) { %>
+        <h2><%= accommodation.nombre %></h2>
+        <div class="row">
+            <div class="col s12 m6"><a href="/alojamientos" id="accommodations-button" class="btn-large waves-effect waves-light amber lighten-1">Atrás</a>
+
+                <div class="card">
+                    <div class="card-image">
+                        <% if (accommodation.fotos && accommodation.fotos.length > 0) { %>
+                            <img class="responsive-img" src="<%= accommodation.fotos[0].url %>" alt="<%= accommodation.nombre %>">
+                        <% } else { %>
+                            <p>No hay fotos disponibles</p>
+                        <% } %>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Precio por noche:</strong> <%= accommodation.precioPorNoche %> EUR</p>
+                        <p><strong>Ubicación:</strong> <%= accommodation.ubicacion %></p>
+                        <p><strong>Capacidad:</strong> <%= accommodation.capacidad %> personas</p>
+                        <p><strong>Tipo:</strong> <%= accommodation.tipo %></p>
+                        <p><strong>Descripción:</strong> <%= accommodation.descripcion %></p>
+                        <!-- Otros detalles del alojamiento... -->
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m6">
+                <!-- Mostrar más fotos del alojamiento si las hay -->
+                <% if (accommodation.fotos && accommodation.fotos.length > 1) { %>
+                    <h4>Más Fotos</h4>
+                    <div class="row">
+                        <% accommodation.fotos.slice(1).forEach(foto => { %>
+                            <div class="col s12 m4">
+                                <img class="responsive-img" src="<%= foto.url %>" alt="<%= accommodation.nombre %>">
+                            </div>
+                        <% }); %>
+                    </div>
+                <% } %>
+            </div>
+
+        </div>
+    <% } else { %>
+        <p>No se encontró el alojamiento</p>
+        <a href="/alojamientos" id="accommodations-button" class="btn-large waves-effect waves-light amber lighten-1">Atrás</a>
+        <% } %>
+
+</div>
+
+<%- include('./footer.ejs') %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

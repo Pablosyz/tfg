@@ -11,26 +11,7 @@
     <title>Editar Alojamiento</title>
 </head>
 <body>
-<nav class="blue darken-1" role="navigation">
-    <div class="nav-wrapper container">
-        <a id="logo-container" href=".." class="brand-logo">Logo</a>
-        <ul class="right hide-on-med-and-down">
-            <li><a id="admin-panel-link" href="../admin/">Panel de Administración</a></li>
-            <li><a id="users-link" href="./users">Usuarios</a></li>
-            <li><a id="accommodations-link" href="./accommodations">Alojamientos</a></li>
-            <li><a id="reservations-link" href="./reservations">Reservas</a></li>
-            <li><a href="/auth/logout">Logout</a></li>
-        </ul>
-        <ul id="nav-mobile" class="sidenav">
-            <li><a id="admin-panel-link-mobile" href="./admin/">Panel de Administración</a></li>
-            <li><a id="users-link-mobile" href="./users">Usuarios</a></li>
-            <li><a id="accommodations-link-mobile" href="./accommodations">Alojamientos</a></li>
-            <li><a id="reservations-link-mobile" href="./reservations">Reservas</a></li>
-            <li><a href="/auth/logout">Logout</a></li>
-        </ul>
-        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-</nav>
+<%- include('../navbar', { showProfile: false, showAdmin: true}) %>
 <main>
     <div class="container">
         <div class="row">
@@ -52,10 +33,10 @@
             </div>
             <!-- Otros campos según tus necesidades -->
             <div class="row">
-                <button class="btn waves-effect waves-light blue darken-1" type="submit" name="action">Actualizar Alojamiento
+                <button class="btn waves-effect waves-light teal darken-1" type="submit" name="action">Actualizar Alojamiento
                     <i class="material-icons right">send</i>
                 </button>
-                <button class="btn waves-effect waves-light blue darken-1" href="/admin/accomodations">Volver atrás
+                <button class="btn waves-effect waves-light teal darken-1" href="/admin/accomodations">Volver atrás
                     <i class="material-icons right">arrow_back</i>
                 </button>
             </div>

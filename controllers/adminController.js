@@ -26,6 +26,7 @@ const {
 // Controladores para reservas
 const {
     getReservations,
+    getNewReservation,
     createReservation,
     editReservation,
     updateReservation,
@@ -45,6 +46,7 @@ module.exports = {
     updateAccommodation,
     deleteAccommodation,
     getReservations,
+    getNewReservation,
     createReservation,
     editReservation,
     updateReservation,

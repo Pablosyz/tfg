@@ -11,24 +11,9 @@
     <title>Panel de Administración</title>
 </head>
 <body>
-<nav class="blue darken-1" role="navigation">
-    <div class="nav-wrapper container">
-        <a id="logo-container" href=".." class="brand-logo">Logo</a>
-        <ul class="right hide-on-med-and-down">
-            <li><a id="users-link" href="/admin/users">Usuarios</a></li>
-            <li><a id="accommodations-link" href="/admin/accommodations">Alojamientos</a></li>
-            <li><a id="reservations-link" href="/admin/reservations">Reservas</a></li>
-            <li><a href="/auth/logout">Logout</a></li>
-        </ul>
-        <ul id="nav-mobile" class="sidenav">
-            <li><a id="users-link-mobile" href="/admin/users">Usuarios</a></li>
-            <li><a id="accommodations-link-mobile" href="/admin/accommodations">Alojamientos</a></li>
-            <li><a id="reservations-link-mobile" href="/admin/reservations">Reservas</a></li>
-            <li><a href="/auth/logout">Logout</a></li>
-        </ul>
-        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-</nav>
+
+<%- include('navbar') %>
+
 <header>
 </header>
 
@@ -36,7 +21,7 @@
     <div class="section no-pad-bot" id="index-banner">
         <div class="container">
             <br><br>
-            <h1 class="header center orange-text">Panel de Administración</h1>
+            <h1 class="header center teal-text">Panel de Administración</h1>
             <div class="row center">
                 <h5 class="header col s12 light">Este es la página de administración de la aplicación.</h5>
                 <p class="text-accent-1">Aquí encontrarás diferentes opciones para interactuar con la base de datos</p>

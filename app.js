@@ -1,6 +1,7 @@
 // app.js
 
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('./utils/passport-config');  // Importa tu configuración de Passport.js
@@ -9,6 +10,7 @@ const indexRoutes = require('./routes/indexRoutes');
 const profileRoutes = require('./routes/profileRoutes')
 const authRoutes = require('./routes/authRoutes');
 const accommodationRoutes = require('./routes/accommodationRoutes');
+const reservationRoutes = require('./routes/reservationRoutes')
 const adminRoutes = require('./routes/adminRoutes');
 
 const flash = require('connect-flash');
@@ -48,8 +50,11 @@ console.log('Después de la configuración de Passport');
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
-
-
+app.use(express.static(path.join(__dirname, 'public')));
+app.use((req,res,next) => {
+    res.locals.user = req.user;
+    next();
+});
 // Rutas principales
 app.use('/', indexRoutes);
 app.use('/', profileRoutes)
@@ -58,11 +63,12 @@ app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
 //Rutas de alojamientos
 app.use('/', accommodationRoutes);
-
+//Rutas de reservas
+app.use('/', reservationRoutes);
 app.get('/admin', (req, res) => {
     if (req.isAuthenticated()) {
         if (req.user.role === 'admin') {
-            return res.render('admin', { user: req.user });
+            return res.render('admin', { currentView: 'admin', showProfile: false, showAdmin: true, user: req.user });
         }
         // Si no es admin, puedes redirigirlo a otra página o mostrar un mensaje de error
         return res.redirect('/profile');
@@ -74,7 +80,7 @@ app.get('/profile', (req, res) => {
     console.log('Accediendo a /profile');
     console.log('Usuario autenticado:', req.isAuthenticated());
     if (req.isAuthenticated()) {
-        res.render('profile', { user: req.user });
+        res.render('profile', { currentView: 'profile', showProfile: true, showAdmin: false, user: req.user });
     } else {
         res.redirect('/auth/login');
     }
@@ -86,7 +92,9 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
+    console.error("Error en middleware de sesión:", err);
     res.status(500).render('error', { message: 'Error interno del servidor' });
+    next(err);
 });
 
 const PORT = 3000;

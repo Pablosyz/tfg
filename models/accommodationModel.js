@@ -12,6 +12,10 @@ const availabilitySchema = new mongoose.Schema({
     // Otros campos según tus necesidades
 });
 
+const featuresSchema = new mongoose.Schema({
+    caracteristica: String,
+})
+
 const accommodationSchema = new mongoose.Schema({
     nombre: String,
     ubicacion: String,
@@ -21,6 +25,7 @@ const accommodationSchema = new mongoose.Schema({
     precioPorNoche: Number, // Nuevo atributo: precio por noche
     capacidad: Number, // Nuevo atributo: capacidad
     tipo: String, // Nuevo atributo: tipo de alojamiento (hotel, casa rural, etc.)
+    caracteristicas: [ featuresSchema ],
     comentarios: [
         {
             usuario: String, // Nombre del usuario que dejó el comentario

@@ -11,7 +11,8 @@ router.get('/alojamientos/:id/imagenes', accommodationController.getAccommodatio
 router.post('/alojamientos/:id/imagenes', accommodationController.addAccommodationImage);
 router.get('/alojamientos/:id/disponibilidad', accommodationController.getAccommodationAvailability);
 router.post('/alojamientos/:id/disponibilidad', accommodationController.addAccommodationAvailability);
-
+// Ruta para ver el detalle de un alojamiento
+router.get('/alojamientos/:id', accommodationController.getAccommodationDetail);
 // Otras rutas para reservas, si es necesario...
 
 module.exports = router;
