@@ -16,26 +16,49 @@
 
 <div class="section no-pad-bot" id="reservations-banner">
     <div class="container">
-        <br><br>
         <div class="row center">
-            <h1 class="text-accent-1">Mis Reservas</h1>
+            <h2 class="text-accent-1">Mis Reservas</h2>
+            <h6>Nos vemos pronto en...</h6>
         </div>
+
         <!-- Mostrar las reservas del usuario -->
         <div class="row center">
             <% if (reservations.length > 0) { %>
-                <ul class="collection">
+
                     <% reservations.forEach((reservation) => { %>
-                        <li class="collection-item">
-                            <span class="title"><strong>Fecha de Inicio:</strong> <%= reservation.fecha_inicio.toDateString() %></span>
-                            <span class="title"><strong>Fecha de Fin:</strong> <%= reservation.fecha_fin.toDateString() %></span>
-                            <p><strong>Nombre:</strong> <%= reservation.nombreReserva %><p>
-                            <p><strong>Alojamiento:</strong> <%= reservation.alojamiento.nombre %></p>
-                            <p><strong>Número de Huéspedes:</strong> <%= reservation.huespedes %></p>
-                            <p><strong>Precio Total:</strong> <%= reservation.precioTotal %>€</p>
-                            <!-- Agregar más detalles de la reserva según sea necesario -->
-                        </li>
+                        <div class="col s12 m6">
+                            <div class="card medium teal lighten-3">
+                                <div class="card-image">
+                                    <img class="activator" src="<%= reservation.alojamiento.fotos[0].url %>" alt="<%= reservation.alojamiento.nombre %>">
+                                </div>
+                                <div class="card-content white-text">
+                                    <span class="card-title activator"><%= reservation.alojamiento.nombre %> (<%= reservation.alojamiento.ubicacion %>)</span>
+                                    <p><strong>Fecha de Inicio:</strong> <%= reservation.fecha_inicio.toLocaleDateString() %></p>
+
+                                    <!-- Agregar más detalles según sea necesario -->
+                                </div>
+                                <div class="card-reveal">
+                                    <span class="card-title grey-text text-darken-4"><%= reservation.alojamiento.nombre %><i class="material-icons right">close</i></span>
+                                    <!-- Detalles adicionales de la reserva -->
+                                    <p><strong>Fecha de Inicio:</strong> <%= reservation.fecha_inicio.toLocaleDateString() %></p>
+                                    <p><strong>Fecha de Fin:</strong> <%= reservation.fecha_fin.toLocaleDateString() %></p>
+                                    <p><strong>Ubicación:</strong> <%= reservation.alojamiento.ubicacion %></p>
+                                    <p><strong>Nombre de confirmación:</strong> <%= reservation.nombreReserva %></p>
+                                    <p><strong>Número de Huéspedes:</strong> <%= reservation.huespedes %></p>
+                                    <p><strong>Precio Total:</strong> <%= reservation.precioTotal %>€</p>
+                                    <p><strong>Teléfono de contacto:</strong> <%= reservation.telefono %></p>
+                                    <p><strong>Email de contacto:</strong> <%= reservation.emailConfirmacion %></p>
+                                </div>
+                                <div class="card-action">
+                                    <!-- Botón para cancelar la reserva -->
+                                    <form action="/profile/reservations/<%= reservation.id %>/cancel" method="post">
+                                        <button type="submit" class="waves-effect waves-light btn red lighten-2">Cancelar Reserva</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     <% }); %>
-                </ul>
+
             <% } else { %>
                 <p>No tienes reservas.</p>
             <% } %>

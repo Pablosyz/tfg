@@ -18,9 +18,14 @@ exports.getReservations = async (req, res) => {
 
 exports.getNewReservation = async (req, res) => {
     try {
-        const accommodations = await Accommodation.find();
-        const users = await User.find();
-        res.render('admin/newReservation', { users, accommodations });
+        if (req.isAuthenticated() && req.user.role === 'admin') {
+            // Renderizar la página de administración
+            const accommodations = await Accommodation.find();
+            const users = await User.find();
+            res.render('admin/newReservation', {users, accommodations});
+        } else {
+            res.redirect('/profile')
+        }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -90,12 +95,31 @@ exports.updateReservation = async (req, res) => {
 
 exports.deleteReservation = async (req, res) => {
     try {
-        await Reservation.findByIdAndDelete(req.params.id);
-        res.redirect('/admin/reservations');
+        const reservation = await Reservation.findById(req.params.id);
+
+        // Verifica si la reserva existe
+        if (!reservation) {
+            return res.status(404).json({ error: 'Reserva no encontrada' });
+        }
+
+        // Verifica si el usuario está autenticado y es un administrador
+        if (req.isAuthenticated() && req.user.role === 'admin') {
+            // El usuario es administrador, puede eliminar la reserva
+            await Reservation.findByIdAndDelete(req.params.id);
+            res.redirect('/admin/reservations');
+        } else if (req.isAuthenticated() && req.user.id === reservation.usuario.toString()) {
+            // El usuario es el propietario de la reserva, puede eliminarla
+            await Reservation.findByIdAndDelete(req.params.id);
+            res.redirect('/profile');
+        } else {
+            // El usuario no tiene permisos para eliminar esta reserva
+            res.status(403).json({ error: 'Acceso no autorizado' });
+        }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 exports.mostrarNuevaReserva = async (req, res) => {
     try {

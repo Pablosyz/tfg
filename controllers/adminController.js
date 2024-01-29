@@ -10,12 +10,12 @@ const {
     updateUser,
     deleteUser
 } = userController;
-console.log('getUsers', getUsers);
-console.log('createUser', createUser);
+
 
 // Controladores para alojamientos
 const {
     getAccommodations,
+    getNewAccommodation,
     createAccommodation,
     editAccommodation,
     updateAccommodation,
@@ -41,6 +41,7 @@ module.exports = {
     updateUser,
     deleteUser,
     getAccommodations,
+    getNewAccommodation,
     createAccommodation,
     editAccommodation,
     updateAccommodation,

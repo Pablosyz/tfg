@@ -5,12 +5,11 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const passport = require('./utils/passport-config');  // Importa tu configuración de Passport.js
-
 const indexRoutes = require('./routes/indexRoutes');
-const profileRoutes = require('./routes/profileRoutes')
+const profileRoutes = require('./routes/profileRoutes');
 const authRoutes = require('./routes/authRoutes');
 const accommodationRoutes = require('./routes/accommodationRoutes');
-const reservationRoutes = require('./routes/reservationRoutes')
+const reservationRoutes = require('./routes/reservationRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 
 const flash = require('connect-flash');
@@ -42,11 +41,10 @@ app.use(session({
 }));
 
 // Configuración de Passport
-console.log('Antes de la configuración de Passport');
 app.use(passport.initialize());
 app.use(passport.session());
 
-console.log('Después de la configuración de Passport');
+console.log('Configuración de Passport aplicada');
 
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');

@@ -1,10 +1,11 @@
 // accommodationController.js
 const Accommodation = require('../models/accommodationModel');
+const User = require("../models/userModel");
+
 
 exports.getAccommodations = async (req, res) => {
     try {
         const accommodations = await Accommodation.find();
-
         // Verificar si el usuario está logueado y es admin
         if (req.isAuthenticated() && req.user.role === 'admin') {
             // Renderizar la página de administración
@@ -18,11 +19,51 @@ exports.getAccommodations = async (req, res) => {
     }
 };
 
+exports.getNewAccommodation = async (req, res) => {
+    try {
+        // Verificar si el usuario está logueado y es admin
+        if (req.isAuthenticated() && req.user.role === 'admin') {
+            // Renderizar la página de administración
+            res.render('admin/newAccommodation');
+        } else {
+            // Renderizar la página pública de alojamientos
+            res.redirect('/alojamientos');
+        }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 exports.createAccommodation = async (req, res) => {
     try {
-        const { nombre, ubicacion, precioPorNoche, capacidad, tipo, descripcion } = req.body;
-        const newAccommodation = new Accommodation({ nombre, ubicacion, precioPorNoche, capacidad, tipo, descripcion });
+        const { nombre, ubicacion, precioPorNoche, capacidad, tipo, descripcion, caracteristicas } = req.body;
+
+        // Accede a las imágenes cargadas desde el formulario
+        const fotos = req.files;
+
+        // Procesa las imágenes y construye el array de objetos para el modelo
+        const fotosArray = fotos.map(image => {
+            return {
+                url: `/images/${image.filename}`, // Ajusta la ruta según tu estructura de archivos
+                // Puedes agregar más campos según tus necesidades, por ejemplo, título, descripción, etc.
+            };
+        });
+
+        const parsedCaracteristicas = Array.isArray(caracteristicas) ? caracteristicas : [caracteristicas];
+
+        const newAccommodation = new Accommodation({
+            nombre,
+            ubicacion,
+            precioPorNoche,
+            capacidad,
+            tipo,
+            descripcion,
+            caracteristicas: parsedCaracteristicas,
+            fotos: fotosArray,
+        });
+
         await newAccommodation.save();
+
         req.flash('success', 'Alojamiento creado con éxito');
         res.redirect('/admin/accommodations');
     } catch (error) {

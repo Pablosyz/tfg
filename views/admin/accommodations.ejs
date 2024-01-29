@@ -20,16 +20,7 @@
         <!-- Sección de Alojamientos -->
         <section id="accommodations-section" class="admin-section">
             <h2>Alojamientos</h2>
-            <form action="/admin/accommodations" method="post">
-                <!-- Campos del formulario para alojamientos según tus necesidades -->
-                <input type="text" name="nombre" placeholder="Nombre del alojamiento" required>
-                <input type="text" name="ubicacion" placeholder="Ubicación" required>
-                <input type="text" name="capacidad" placeholder="Capacidad" required>
-                <input type="text" name="precioPorNoche" placeholder="Precio por noche" required>
-                <!-- Otros campos para imágenes, disponibilidad, etc. -->
-                <button class="btn waves-effect waves-light teal darken-1" type="submit">Crear Alojamiento</button>
-            </form>
-
+            <a class="waves-effect waves-light btn teal" href="/admin/accommodations/new">Nuevo alojamiento</a>
             <!-- Tabla para mostrar alojamientos existentes -->
             <table class="highlight responsive-table">
                 <thead>

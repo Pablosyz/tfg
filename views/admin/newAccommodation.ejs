@@ -1,0 +1,124 @@
+<!-- views/admin/newReservation.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <title>Panel de Administración - Alojamientos</title>
+</head>
+<body>
+<%- include('../navbar', { showProfile: false, showAdmin: true}) %>
+<header>
+</header>
+<main>
+    <!-- Contenido para la creación de un nuevo alojamiento -->
+    <div class="container">
+        <section id="new-accommodation-section">
+            <h2>Crear Nuevo Alojamiento</h2>
+            <form action="/admin/accommodations" method="post" enctype="multipart/form-data">
+                <!-- Campos del formulario para alojamientos según tus necesidades -->
+                <input type="text" name="nombre" placeholder="Nombre del alojamiento" required>
+                <input type="text" name="ubicacion" placeholder="Ubicación" required>
+                <input type="text" name="descripcion" placeholder="Descripción" required>
+                <input type="number" name="capacidad" placeholder="Capacidad" required>
+                <input type="number" name="precioPorNoche" placeholder="Precio por noche" required>
+
+                <!-- Campo select para el tipo de alojamiento -->
+                <label for="tipo">Tipo de alojamiento:</label>
+                <select name="tipo" id="tipo" required>
+                    <option value="Apartamento">Apartamento</option>
+                    <option value="Habitación">Habitación</option>
+                    <option value="Casa">Casa</option>
+                    <option value="Casa rural">Casa rural</option>
+                </select>
+                <label>Características:</label>
+                <div class="row">
+                    <div class="col s12 m6 l4">
+                        <label>
+                            <input type="checkbox" name="caracteristicas" value="Aire acondicionado">
+                            <span>Aire acondicionado</span>
+                        </label>
+                    </div>
+                    <div class="col s12 m6 l4">
+                        <label>
+                            <input type="checkbox" name="caracteristicas" value="Lavavajillas">
+                            <span>Lavavajillas</span>
+                        </label>
+                    </div>
+                    <div class="col s12 m6 l4">
+                        <label>
+                            <input type="checkbox" name="caracteristicas" value="Lavadora">
+                            <span>Lavadora</span>
+                        </label>
+                    </div>
+                    <div class="col s12 m6 l4">
+                        <label>
+                            <input type="checkbox" name="caracteristicas" value="Internet">
+                            <span>Internet</span>
+                        </label>
+                    </div>
+                    <div class="col s12 m6 l4">
+                        <label>
+                            <input type="checkbox" name="caracteristicas" value="Televisión">
+                            <span>Televisión</span>
+                        </label>
+                    </div>
+                    <div class="col s12 m6 l4">
+                        <label>
+                            <input type="checkbox" name="caracteristicas" value="Bañera">
+                            <span>Bañera</span>
+                        </label>
+                    </div>
+                    <div class="col s12 m6 l4">
+                        <label>
+                            <input type="checkbox" name="caracteristicas" value="Plato de ducha">
+                            <span>Plato de ducha</span>
+                        </label>
+                    </div>
+                    <div class="col s12 m6 l4">
+                        <label>
+                            <input type="checkbox" name="caracteristicas" value="Terraza">
+                            <span>Terraza</span>
+                        </label>
+                    </div>
+                    <div class="col s12 m6 l4">
+                        <label>
+                            <input type="checkbox" name="caracteristicas" value="Se permiten mascotas">
+                            <span>Se permiten mascotas</span>
+                        </label>
+                    </div>
+                </div>
+                <!-- Campo para subir fotos (puedes ajustar según tus necesidades) -->
+                <label for="fotos">Subir fotos:</label>
+                <input type="file" name="fotos" id="fotos" accept="image/*" multiple>
+
+                <button class="btn waves-effect waves-light teal darken-1" type="submit">Crear Alojamiento</button>
+            </form>
+            <!-- Puedes agregar más contenido o estilos según tus necesidades -->
+        </section>
+    </div>
+</main>
+<!-- Resto del código similar a la vista principal -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var options = {};
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems, options);
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        var options = {
+            format: 'yyyy-mm-dd',
+            autoClose: true,
+        };
+        var elems = document.querySelectorAll('.datepicker');
+        var instances = M.Datepicker.init(elems, options);
+    });
+</script>
+</body>
+</html>

@@ -23,13 +23,12 @@
         <form class="col l6 s12" action="/admin/reservations/<%= reservation._id %>/edit" method="post">
             <div class="row">
                 <div class="input-field col s6">
-                    <select name="alojamiento" required>
-                        <option value="<%= reservation.alojamiento %>" selected="<%= reservation.alojamiento %>"></option>
+                    <select name="alojamiento">
                         <% accommodations.forEach(accommodation => { %>
-                            <option value="<%= accommodation._id %>"><%= accommodation.nombre %></option>
+                            <option value="<%= accommodation._id %>" <% if (reservation && reservation.idAlojamiento && reservation.idAlojamiento.toString() === accommodation._id.toString()) { %> selected <% } %>><%= accommodation.nombre %></option>
                         <% }); %>
                     </select>
-                    <label id="alojamiento">Alojamiento</label>
+                    <label>Selecciona un alojamiento</label>
                 </div>
             </div>
                         <div class="row">
