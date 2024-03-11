@@ -6,18 +6,18 @@ const imageSchema = new mongoose.Schema({
     // Puedes agregar más campos como descripción, título, etc. según tus necesidades
 });
 
-const availabilitySchema = new mongoose.Schema({
-    date: Date,
-    available: Boolean,
-    // Otros campos según tus necesidades
+const reservationSchema = new mongoose.Schema({
+    start: Date, // Fecha de inicio de la reserva
+    end: Date,   // Fecha de finalización de la reserva
 });
-
 
 const accommodationSchema = new mongoose.Schema({
     nombre: String,
     ubicacion: String,
     fotos: [imageSchema], // Array de imágenes
-    disponibilidad: [availabilitySchema], // Array de disponibilidad
+    disponibilidad: {
+        reservas: [reservationSchema], // Array de reservas existentes
+    }, // Array de disponibilidad
     descripcion: String,
     precioPorNoche: Number, // Nuevo atributo: precio por noche
     capacidad: Number, // Nuevo atributo: capacidad

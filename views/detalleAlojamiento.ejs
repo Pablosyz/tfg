@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
     <title>Detalle del Alojamiento</title>
 </head>
 
@@ -24,7 +25,6 @@
         <h2><%= accommodation.nombre %></h2>
         <div class="row">
             <div class="col s12 m6"><a href="/alojamientos" id="accommodations-button" class="btn-large waves-effect waves-light amber lighten-1">Atrás</a>
-
                 <div class="card">
                     <div class="card-image">
                         <% if (accommodation.fotos && accommodation.fotos.length > 0) { %>
@@ -45,8 +45,8 @@
             </div>
             <div class="col s12 m6">
                 <!-- Mostrar más fotos del alojamiento si las hay -->
+                <h4>Más Fotos</h4>
                 <% if (accommodation.fotos && accommodation.fotos.length > 1) { %>
-                    <h4>Más Fotos</h4>
                     <div class="row">
                         <% accommodation.fotos.slice(1).forEach(foto => { %>
                             <div class="col s12 m4">
@@ -56,18 +56,83 @@
                     </div>
                 <% } %>
             </div>
-
         </div>
+            <div class="row">
+                <div class="col s12 m6">
+                    <div class="card teal lighten-5">
+                        <div class="card-content">
+                            <span class="card-title teal-text text-darken-2">Características<i class="material-icons right">star</i></span>
+                            <ul class="collection">
+                                <% if (accommodation.caracteristicas && accommodation.caracteristicas.length > 0) { %>
+                                    <% accommodation.caracteristicas.forEach(caracteristica => { %>
+                                        <li class="collection-item"><i class="material-icons teal-text text-darken-2">check</i><%= caracteristica %></li>
+                                    <% }); %>
+                                <% } else { %>
+                                    <li class="collection-item">No hay características especificadas.</li>
+                                <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6" id="calendario"></div>
+            </div>
+
+
+
+
     <% } else { %>
         <p>No se encontró el alojamiento</p>
         <a href="/alojamientos" id="accommodations-button" class="btn-large waves-effect waves-light amber lighten-1">Atrás</a>
-        <% } %>
+    <% } %>
 
 </div>
 
 <%- include('./footer.ejs') %>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.10/index.global.min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.10/locales/es.global.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.10/index.global.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        console.log("Inicio del script");
+
+        const disponibilidad = <%- JSON.stringify(reservas || []) %>;
+        console.log("Fechas ocupadas desde el servidor:", disponibilidad);
+
+        const eventos = disponibilidad.map(reserva => {
+            console.log(reserva);
+            // Verificar si la reserva no es nula antes de formatear
+            if (reserva && reserva.start && reserva.end) {
+                console.log("Fecha de inicio en reserva:", reserva.start);
+                console.log("Fecha de fin en reserva:", reserva.end);
+                return {
+                    title: 'Reservado',
+                    start: new Date(reserva.start).toISOString(),
+                    end: new Date(reserva.end).toISOString(),
+                    allDay: true,
+                };
+            }
+            return null; // O manejar el caso de reservas nulas según tus necesidades
+        }).filter(evento => evento !== null);
+        console.log("Eventos a mostrar:", eventos);
+
+        try {
+            const calendarEl = document.getElementById('calendario');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                locale: 'es',
+                initialView: 'dayGridMonth',
+                events: eventos,
+            });
+
+            calendar.render();
+            console.log("Calendario renderizado con éxito");
+        } catch (error) {
+            console.error("Error al renderizar el calendario:", error);
+        }
+    });
+</script>
+
 </body>
 
 </html>

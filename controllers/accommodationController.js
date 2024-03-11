@@ -141,7 +141,7 @@ exports.addAccommodationImage = async (req, res) => {
 
 // Controlador para obtener todas las fechas de disponibilidad de un alojamiento
 exports.getAccommodationAvailability = async (req, res) => {
-   try {
+    try {
         const { id } = req.params;
         const accommodation = await Accommodation.findById(id);
 
@@ -150,11 +150,12 @@ exports.getAccommodationAvailability = async (req, res) => {
         }
 
         const availability = accommodation.disponibilidad || [];
-        res.json(availability);
+        // Renderizar la vista con los detalles del alojamiento y las fechas de disponibilidad
+        res.render('detalleAlojamiento.ejs', { accommodation, availability });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
+};
 
 // Controlador para agregar una nueva fecha de disponibilidad a un alojamiento
 exports.addAccommodationAvailability = async (req, res) => {
@@ -185,8 +186,11 @@ exports.getAccommodationDetail = async (req, res) => {
             return res.status(404).render('error.ejs', { message: 'Alojamiento no encontrado' });
         }
 
-        // Renderizar la vista con los detalles del alojamiento
-        res.render('detalleAlojamiento.ejs', { accommodation });
+        // Obtener las fechas ocupadas o disponibilidad del alojamiento, dependiendo de tu implementación
+        const reservas = accommodation.disponibilidad.reservas || [];
+
+        // Renderizar la vista con los detalles del alojamiento y las fechas ocupadas
+        res.render('detalleAlojamiento.ejs', { accommodation, reservas });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
