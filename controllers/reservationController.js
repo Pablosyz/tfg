@@ -8,7 +8,7 @@ exports.getReservations = async (req, res) => {
         const reservations = await Reservation.find()
             .populate('usuario')
             .populate('alojamiento');
-        // Cargamos las consultas para obtener la lista de alojamientos y usuarios
+        // Carga las consultas para obtener la lista de alojamientos y usuarios
 
         res.render('admin/reservations', { reservations });
     } catch (error) {
@@ -218,7 +218,6 @@ exports.crearNuevaReserva = async (req, res) => {
         console.log(req.body);
         const { nombreReserva, emailConfirmacion, telefono, fecha_inicio, fecha_fin, huespedes, idAlojamiento } = req.body;
 
-        // Asumo que el usuario está autenticado y su información está disponible en req.user
         const usuario = req.user._id;
 
         const fechaInicioObj = new Date(fecha_inicio);
@@ -249,14 +248,13 @@ exports.crearNuevaReserva = async (req, res) => {
             return res.redirect('/profile');
         }
 
-        // Calcular el precio total según tus necesidades
+        // Calcular el precio total
         const calcularPrecioTotal = (precioPorNoche, fechaInicio, fechaFin) => {
             const fechaInicioObj = new Date(fechaInicio);
             const fechaFinObj = new Date(fechaFin);
             const diferenciaDias = (fechaFinObj - fechaInicioObj) / (1000 * 60 * 60 * 24);
             const precioTotal = precioPorNoche * diferenciaDias;
 
-            // Puedes agregar lógica adicional según tus necesidades
 
             return precioTotal;
         };

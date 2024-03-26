@@ -18,15 +18,13 @@
         <!-- Sección de Usuarios -->
         <section id="users-section" class="admin-section">
             <h2>Usuarios</h2>
-            <!-- Agregar formularios y lógica para usuarios aquí -->
             <form action="/admin/users" method="post">
-                <!-- Campos del formulario según tus necesidades -->
+                <!-- Campos del formulario  -->
                 <input type="text" name="username" placeholder="Nombre de usuario" required>
                 <input type="password" name="password" placeholder="Contraseña" required>
                 <input type="text" name="nombre" placeholder="Nombre completo" required>
                 <input type="tel" name="telefono" placeholder="Número de teléfono">
 
-                <!-- Otros campos de datos personales según sea necesario -->
                 <button class="btn waves-effect waves-light teal darken-1" type="submit">Crear Usuario</button>
             </form>
             <!-- Tabla para mostrar usuarios existentes -->
@@ -49,7 +47,6 @@
                             <td><%= user.nombre %></td>
                             <td><%= user.telefono %></td>
                             <td>
-                                <!-- Agregar botones para editar y eliminar (puedes usar formularios o enlaces según prefieras) -->
                                 <a class="waves-effect waves-light btn" href="/admin/users/<%= user._id %>/edit">Editar</a>
                                 <a class="waves-effect waves-light btn" href="/admin/users/<%= user._id %>/delete">Eliminar</a>
                             </td>

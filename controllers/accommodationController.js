@@ -45,7 +45,7 @@ exports.createAccommodation = async (req, res) => {
         const fotosArray = fotos.map(image => {
             return {
                 url: `/images/${image.filename}`, // Ajusta la ruta según tu estructura de archivos
-                // Puedes agregar más campos según tus necesidades, por ejemplo, título, descripción, etc.
+
             };
         });
 
@@ -129,7 +129,7 @@ exports.addAccommodationImage = async (req, res) => {
             return res.status(404).json({ message: 'Alojamiento no encontrado' });
         }
 
-        const nuevaImagen = req.body.nuevaImagen; // Asegúrate de enviar la imagen en el cuerpo de la solicitud
+        const nuevaImagen = req.body.nuevaImagen;
         accommodation.imagenes.push(nuevaImagen);
         await accommodation.save();
 
@@ -167,7 +167,7 @@ exports.addAccommodationAvailability = async (req, res) => {
             return res.status(404).json({ message: 'Alojamiento no encontrado' });
         }
 
-        const nuevaFechaDisponibilidad = req.body.nuevaFechaDisponibilidad; // Asegúrate de enviar la fecha en el cuerpo de la solicitud
+        const nuevaFechaDisponibilidad = req.body.nuevaFechaDisponibilidad;
         accommodation.disponibilidad.push(nuevaFechaDisponibilidad);
         await accommodation.save();
 

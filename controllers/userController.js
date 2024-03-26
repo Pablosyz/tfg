@@ -49,7 +49,7 @@ exports.editUser = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         const { username, password, nombre, telefono } = req.body;
-        // Hashea la contraseña antes de almacenarla en la base de datos, si es proporcionada
+        // Hashea la contraseña antes de almacenarla en la base de datos
         const hashedPassword = password ? bcrypt.hashSync(password, 10) : undefined;
 
         // Implementa la lógica para actualizar el usuario en la base de datos
@@ -68,7 +68,6 @@ exports.deleteUser = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-// Otros controladores para editar y eliminar usuarios...
 // Obtener el perfil del usuario
 exports.getUserProfile = async (req, res) => {
     try {

@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 
 const imageSchema = new mongoose.Schema({
     url: String,
-    // Puedes agregar más campos como descripción, título, etc. según tus necesidades
 });
 
 const reservationSchema = new mongoose.Schema({

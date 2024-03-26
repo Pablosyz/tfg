@@ -25,12 +25,11 @@
             <h5>Precio/noche: <%= precioPorNoche %>€ </h5>
             <h6>Ubicación: <%= selectedAccommodation.ubicacion %></h6>
 
-            <!-- Mostrar más detalles según tus necesidades -->
         </div>
 
         <!-- Formulario de Reserva -->
         <form action="/reservar" method="post">
-            <!-- Campos del formulario para la reserva según tus necesidades -->
+            <!-- Campos del formulario para la reserva  -->
             <div class="row">
                 <label for="nombreReserva">Nombre para la reserva:</label>
                 <input type="text" id="nombreReserva" name="nombreReserva" value="<%= usuario.nombre %>" required />
@@ -55,7 +54,6 @@
                 <label for="huespedes">Número de Huéspedes:</label>
                 <input type="number" id="huespedes" name="huespedes" required />
             </div>
-            <!-- Otros campos según tus necesidades -->
             <input type="hidden" name="idAlojamiento" value="<%= selectedAccommodation._id %>">
             <button class="btn waves-effect waves-light teal darken-1" type="submit">Confirmar Reserva</button>
         </form>
