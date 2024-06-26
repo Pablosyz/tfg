@@ -25,18 +25,30 @@ Autenticación de usuarios: Los usuarios se registran y acceden a la plataforma 
 **Instalación**
 (Pendiente de definición)
 
-**Uso**
-(Pendiente de definición)
+* Descargar e instalar **NodeJS**
+* Descargar e instalar **MongoDB**
+
+En primer lugar, habrá que iniciar mongoDB y crear una base de datos para que se pueda usar desde la aplicación.
+Después, habrá que modificar la conexión a la BD desde nuestro fichero principal `app.js` 
+
+    mongoose.connect('mongodb://127.0.0.1:27017/miaplicaciondb', { })
+    ...
+
+Una vez realizados estos pasos anteriores, lo siguiente será ejecutar el comando
+
+    npm install
+Para instalar todos los paquetes de NodeJS necesarios en el proyecto. Posteriormente, podremos iniciar nuestra aplicación
+mediante el comando:
+
+    node app.js
 
 **Ejemplos**
 (Pendientes de definición)
 
 **Información adicional**
+* **Licencia:** (pendiente)
 
-**Licencia:**
-
-**Recursos adicionales**
+* **Recursos adicionales** (pendiente)
 (enlaces a sitios web relacionados, documentación o repositorios)
 
-**Capturas de pantalla o demostraciones**
-(capturas de pantalla o vídeos que muestren el funcionamiento de tu proyecto)
+* **Capturas de pantalla o demostraciones**
