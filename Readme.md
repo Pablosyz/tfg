@@ -7,6 +7,8 @@ Esta aplicación web permite gestionar las reservas de alojamientos turísticos 
 
 **Tecnologías:**
 
+![NPM Version](https://img.shields.io/npm/v/npm)
+
 * **Lenguajes de programación:** Node.js
 * **Frameworks:** Express
 * **Base de datos:** MongoDB
