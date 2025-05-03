@@ -1,11 +1,11 @@
-**Trabajo de Fin de Grado sobre Desarrollo de una Plataforma Web de Gestión y Reservas de Alojamientos Turísticos
-Resumen del proyecto**
+# Trabajo de Fin de Grado sobre Desarrollo de una Plataforma Web de Gestión y Reservas de Alojamientos Turísticos
+Resumen del proyecto
 
-**Descripción:**
+## Descripción:
 
 Esta aplicación web permite gestionar las reservas de alojamientos turísticos de forma online. Facilita la comunicación entre propietarios de alojamientos y clientes, optimizando el proceso de búsqueda, reserva y gestión de estancias.
 
-**Tecnologías:**
+## Tecnologías utilizadas:
 
 ![NPM Version](https://img.shields.io/npm/v/npm)
 
@@ -16,7 +16,7 @@ Esta aplicación web permite gestionar las reservas de alojamientos turísticos 
 * **Diseño web:** Materialize CSS
 * **Autenticación:** Passport.js
 
-**Funcionalidades:**
+## :hammer: Funcionalidades del proyecto
 
 Sistema de gestión de alojamientos: Los propietarios pueden publicar sus alojamientos, incluyendo fotos, descripciones, precios y disponibilidad.
 Sistema de reservas online: Los clientes pueden buscar y reservar alojamientos según sus preferencias, fechas y presupuesto.
@@ -24,7 +24,7 @@ Panel de control para propietarios: Los propietarios pueden gestionar sus reserv
 Panel de control para clientes: Los clientes pueden ver sus reservas, realizar pagos, modificar datos y comunicarse con los propietarios.
 Autenticación de usuarios: Los usuarios se registran y acceden a la plataforma mediante un sistema de autenticación seguro.
 
-**Instalación**
+## Instalación
 (Pendiente de definición)
 
 * Descargar e instalar **NodeJS**
@@ -44,10 +44,10 @@ mediante el comando:
 
     node app.js
 
-**Ejemplos**
+### Ejemplos
 (Pendientes de definición)
 
-**Información adicional**
+### Información adicional
 * **Licencia:** (pendiente)
 
 * **Recursos adicionales** (pendiente)
