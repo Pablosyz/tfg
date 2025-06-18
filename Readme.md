@@ -52,9 +52,6 @@ El sistema se ha diseñado pensando en la usabilidad y escalabilidad, y permite 
 - Variables de entorno (opcional): Puedes usar un archivo `.env` para configurar parámetros sensibles como claves secretas de sesión, puertos, etc.
 - Inicialización de datos: Puedes crear datos iniciales de prueba o usuarios administrativos para comenzar a usar la plataforma.
 
-## Ejemplos
-(Pendiente añadir ejemplos concretos de uso, comandos, o capturas de pantalla)
-
 ## Información adicional
 
 * **Licencia:** (pendiente definir, por ejemplo MIT, GPL...)
