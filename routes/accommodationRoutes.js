@@ -13,6 +13,5 @@ router.get('/alojamientos/:id/disponibilidad', accommodationController.getAccomm
 router.post('/alojamientos/:id/disponibilidad', accommodationController.addAccommodationAvailability);
 // Ruta para ver el detalle de un alojamiento
 router.get('/alojamientos/:id', accommodationController.getAccommodationDetail);
-// Otras rutas para reservas, si es necesario...
 
 module.exports = router;
